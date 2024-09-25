@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"; // Make sure to import axios
 
 const SignupPage = () => {
   const [name, setName] = useState("");
@@ -7,26 +8,31 @@ const SignupPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
-  let direct = useNavigate();
+  const navigate = useNavigate(); // Changed from 'direct' to 'navigate'
 
-  const handleSignup = (e) => {
-    e.preventDefault(e);
-    axios.post();
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(
+        "http://localhost:4000/auth/register",
+        {
+          name,
+          email,
+          password,
+          confirmPassword,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      navigate("/success");
+    } catch (error) {
+      navigate("/error");
+    }
   };
-
-  // const handleSignUp = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await axios.post("http://localhost:5000/api/signup", {
-  //       name,
-  //       email,
-  //       password,
-  //     });
-  //     history.push("/success");
-  //   } catch (error) {
-  //     history.push("/error");
-  //   }
-  // };
 
   return (
     <div className="container">
