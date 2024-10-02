@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // Make sure to import axios
+import axios from "axios";
 
 const SignupPage = () => {
   const [name, setName] = useState("");
@@ -8,28 +8,23 @@ const SignupPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate(); // Changed from 'direct' to 'navigate'
+  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:4000/auth/register",
+        "https://fullstackapp-1-0wyh.onrender.com/auth/register",
         {
           name,
           email,
           password,
           confirmPassword,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
         }
       );
-      navigate("/success");
+      navigate("/success/signup");
     } catch (error) {
+      console.log(error);
       navigate("/error");
     }
   };

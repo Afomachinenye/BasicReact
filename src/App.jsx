@@ -21,7 +21,7 @@ function App() {
       element: <SignupPage />,
     },
     {
-      path: "/sucess",
+      path: "/success/:action",
       element: <SuccessPage />,
     },
     { path: "/error", element: <Error /> },
